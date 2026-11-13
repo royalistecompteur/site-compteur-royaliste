@@ -1,27 +1,35 @@
-# Vérification du 13 novembre 2026
+# État des vérifications — architecture agrégée (13 novembre 2026)
 
-## Réalisé
+## Changements sur `main`
 
-- Installation des dépendances avec fichier de verrouillage ; audit npm : zéro vulnérabilité signalée lors de l'installation.
-- `npm test` : 13 tests réussis, zéro échec.
-- Douze tests serveur couvrent la collecte fermée, le compteur de démonstration à zéro, l'origine, le format/taille des requêtes, les déclarations strictes, la version, les limites de fréquence, Turnstile (réponses simulées), les doublons, la panne de base, les retraits pendant suspension, le cron et l'absence de secrets dans la configuration publique.
-- Migration exécutée dans PGlite (PostgreSQL local) : insertion unique, requêtes multiples, compteur, retrait idempotent, expiration, limitation de fréquence, refus aux rôles anon/authenticated et autorisation service_role.
-- `npm run build` : compilation de production réussie.
-- Vérification dans le navigateur de la démonstration : bouton désactivé tant que le consentement manque, simulation 0 → 1, confirmation et blocage d'un second clic, réinitialisation 1 → 0, navigation vers la confidentialité et retour.
-- Affichage mobile contrôlé à 390 × 844 ; largeur du document égale à 390, sans débordement horizontal. Contrôle du format bureau à 1280 px.
+- Le serveur ne reçoit plus de `browserId`, ne calcule plus d'empreinte IP et n'enregistre plus de ligne personnelle.
+- La migration `004_anonymous_aggregate.sql` conserve l'ancien total en addition agrégée, puis supprime les tables individuelles et historiques.
+- L'interface abandonne le code privé, le stockage navigateur et le formulaire de retrait.
+- Les tâches Cron obsolètes sont retirées du fichier Vercel ; le script SQL d'exploitation les désactive côté Supabase.
+- Les tests d'API et SQL sont adaptés à cette architecture.
 
-## À vérifier avant ouverture
+## Tests non encore exécutés sur ce nouvel état
 
-Aucun projet Supabase distant ni déploiement Vercel n'a été créé ou modifié. Pas de publication, pas de données personnelles réelles collectées.
+Les tests et la compilation **n'ont pas pu être exécutés dans cette session**, faute d'accès réseau au dépôt depuis l'environnement d'exécution. Les résultats antérieurs de tests et compilation concernent l'ancienne architecture et ne prouvent pas le fonctionnement des changements agrégés.
 
-Le test `npm run test:db` sur un projet Supabase isolé est fourni mais n'a pas été exécuté : il vérifie notamment la concurrence sur des connexions réelles (PGlite sérialise ses requêtes). L'intégration Turnstile réelle, les en-têtes appliqués par Vercel, le cron hébergé, les politiques de journaux/sauvegardes et le retrait de bout en bout restent à vérifier dans l'environnement de test configuré. Les textes juridiques sont à compléter et valider.
+À exécuter après un `git pull` :
 
-## Revue des informations (même date)
+```sh
+npm ci
+npm test
+npm run build
+npm run test:volume
+```
 
-Statut confirmé : particulier non professionnel. Voir `docs/REVUE_INFORMATIONS.md` pour les sources, corrections et points à résoudre. Formulaire/notice révisés, nouvelle version de consentement `2026-11-13-v2` et migration `002_consent_v2.sql`. Les 13 tests passent après modification : la base refuse la v1, les autorisations restent restreintes et le serveur refuse l'ouverture sans secret de purge. La compilation réussit. Aucune vérification juridique finale ni configuration distante n'a été réalisée.
+Le test distant `npm run test:db` exige `RUN_DATABASE_TESTS=isolated` et une base Supabase jetable : chaque incrément y est irréversible.
 
-## Renforcement de la durée et du volume (13 novembre 2026)
+## Mise en service toujours à vérifier
 
-- 18 tests réussis (dont migration d’une base déjà peuplée sans perte de participations) : cache partagé entre 100 lecteurs simultanés d'une instance, erreurs non cachées, reprise après panne, santé privée, requêtes répétées sans double comptage, droits SQL, transaction annulée sans dérive du compteur, refus d'insertion si entretien en retard, retrait toujours disponible, purge bornée et reprise du lot suivant.
-- Test de volume local avec 1 000 000 lignes fictives : total exact, purge de 5 000 lignes, total final 995 000. Résultats chiffrés dans `docs/volume-result.json`.
-- Compilation réussie. Test distant de concurrence, configuration réelle du cache CDN, Supabase Cron, alertes et restauration de sauvegarde restent à effectuer avant ouverture. Aucune garantie de débit hébergé n'est déduite du moteur local.
+1. Tester la migration sur une sauvegarde isolée, notamment la conservation du total historique.
+2. Appliquer la migration et la désactivation des anciens Cron dans le vrai projet Supabase.
+3. Recharger le schéma PostgREST, vérifier les droits d'exécution `service_role` et l'absence des anciennes tables.
+4. Mettre à jour les variables Vercel et valider les mentions légales, sous-traitants et journaux.
+5. Tester le formulaire Turnstile sur le domaine HTTPS réel et vérifier les erreurs réseau.
+6. N'activer `COLLECTION_ENABLED=true` et la nouvelle `LEGAL_APPROVED_VERSION` qu'après ces contrôles.
+
+**Aucun test réussi ni déploiement effectif n'est affirmé pour cette refonte.**
