@@ -55,4 +55,13 @@ test('database failure never fabricates a count',async()=>{
 test('public config does not expose secret',async()=>{
  const result=await call({action:'config',method:'GET'});
  assert.equal(result.output.live,true);assert.equal(JSON.stringify(result.output).includes('secret'),false);
+ assert.equal(Object.hasOwn(result.output,'controller'),false);
+ assert.equal(Object.hasOwn(result.output,'address'),false);
+ assert.equal(Object.hasOwn(result.output,'publisher'),false);
+});
+
+test('public API never leaks historical editor metadata, even with sensitive Vercel variables configured',async()=>{
+ const r=await call({action:'config',method:'GET',config:{...env,LEGAL_CONTROLLER:'PRIVATE_EDITOR_NAME',LEGAL_ADDRESS:'PRIVATE_HOME_ADDRESS',LEGAL_PUBLISHER:'PRIVATE_PUBLISHER_NAME'}});
+ assert.equal(r.status,200);
+ for(const value of ['PRIVATE_EDITOR_NAME','PRIVATE_HOME_ADDRESS','PRIVATE_PUBLISHER_NAME'])assert.ok(!JSON.stringify(r.output).includes(value));
 });
