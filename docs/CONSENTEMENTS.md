@@ -1,19 +1,13 @@
-# Versions des projets de consentement
+# Historique des consentements
 
-Ces versions ont été préparées en démonstration. Aucune n'a été validée pour une collecte réelle dans cette session.
+Les anciennes versions `2026-11-13-v1`, `2026-11-13-v2` et `2026-11-13-v3` concernaient une conservation de participations individuelles pseudonymisées avec retrait par code. Elles ne doivent plus être utilisées pour les nouvelles participations.
 
-## 2026-11-13-v1 — remplacée
+## Version actuelle : `2026-11-13-aggregate-v1` (projet à valider)
 
-J’accepte explicitement que mon soutien, qui révèle une opinion politique, soit traité pour enregistrer ma participation et alimenter le compteur public, pendant 180 jours, avec suppression sous 24 heures à l’échéance, selon la notice de confidentialité. Je peux retirer mon consentement à tout moment avec mon code privé.
+> Je consens explicitement à l’ajout de mon soutien, révélant une opinion politique, à un compteur agrégé anonyme. Aucun code personnel n’est conservé et le retrait individuel est impossible. Voir la notice de confidentialité.
 
-## 2026-11-13-v2 — remplacée
+La version exacte en JSX avec le lien vers la notice figure dans `src/main.jsx`. Cette notice doit être complétée et validée avant une collecte réelle. Une fois la contribution ajoutée, il n'existe plus d'enregistrement individuel permettant son retrait. La publication de coordonnées d'éditeur et le traitement de données techniques par les prestataires demeurent des questions distinctes.
 
-J’accepte explicitement que mon soutien, qui révèle une opinion politique, soit traité pour enregistrer ma participation, en limiter les doublons et alimenter le compteur public, pendant 180 jours, puis suppression lors du nettoyage quotidien, selon la notice de confidentialité. Je peux retirer mon consentement à tout moment avec mon code privé.
+## Archive
 
-Le formulaire précise le caractère volontaire, le responsable, le contact et le caractère sensible des données. La notice associée figure dans `src/main.jsx`. Avant toute ouverture, archiver dans le dépôt la version finale intégrale de cette notice, avec les coordonnées et informations effectives de déploiement ; versionner de nouveau si ces informations changent le consentement. Ce fichier de projets ne constitue pas à lui seul une preuve de consentement.
-
-## 2026-11-13-v3 — projet courant
-
-J’accepte explicitement que mon soutien, qui révèle une opinion politique, soit traité pour enregistrer ma participation, en limiter les doublons et alimenter le compteur public, pendant 180 jours, puis suppression lors du nettoyage régulier, selon la notice de confidentialité. Je peux retirer mon consentement à tout moment avec mon code privé.
-
-Le nettoyage régulier utilise des lots de 5 000 lignes et doit être planifié chaque minute. La collecte se suspend si son fonctionnement n’est plus confirmé depuis 26 heures ou si une expiration est dépassée de plus de 24 heures. Le retrait reste disponible. Une intervention reste nécessaire en cas de panne : la suspension ne supprime pas à elle seule les données expirées.
+Les textes des consentements v1/v2/v3 sont remplacés par la nouvelle conception. Ne pas réactiver une version ancienne sans réexaminer la base et les obligations juridiques.
