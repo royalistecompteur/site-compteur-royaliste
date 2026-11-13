@@ -3,7 +3,7 @@ export const declarations = ['french','adult','support','first','consent'];
 export function live(env) {
   return env.COLLECTION_ENABLED === 'true' &&
     env.LEGAL_APPROVED_VERSION === VERSION &&
-    ['SUPABASE_URL','SUPABASE_SERVICE_ROLE_KEY','APP_ORIGIN','LEGAL_CONTROLLER','LEGAL_ADDRESS','LEGAL_EMAIL','LEGAL_PUBLISHER','TURNSTILE_SITE_KEY','TURNSTILE_SECRET_KEY'].every(k => Boolean(env[k]?.trim()));
+    ['SUPABASE_URL','SUPABASE_SERVICE_ROLE_KEY','APP_ORIGIN','LEGAL_EMAIL','TURNSTILE_SITE_KEY','TURNSTILE_SECRET_KEY'].every(k => Boolean(env[k]?.trim()));
 }
 export function validBody(body) {
   return body && body.version === VERSION &&
@@ -50,11 +50,11 @@ export function createHandler(env=process.env,fetcher=fetch,{cachePublicCount=fa
     const send=(status,data)=>res.status(status).json(data);
     const action=req.query?.action;
     try{
+      // Only publish the project's dedicated contact address, never editor metadata.
+      // Historical LEGAL_CONTROLLER / ADDRESS / PUBLISHER environment values stay server-side.
       if(req.method==='GET'&&action==='config')return send(200,{
         live:live(env),version:VERSION,siteKey:live(env)?env.TURNSTILE_SITE_KEY:null,
-        controller:env.LEGAL_CONTROLLER||'À renseigner avant ouverture',
-        address:env.LEGAL_ADDRESS||'À renseigner',email:env.LEGAL_EMAIL||'',
-        publisher:env.LEGAL_PUBLISHER||'À renseigner'
+        email:env.LEGAL_EMAIL||''
       });
       if(req.method==='GET'&&action==='count'){
         if(!live(env))return send(200,{count:0,demo:true});
