@@ -63,3 +63,11 @@ Il n'existe plus de mécanisme de rétractation individuelle, de dédoublonnage 
 ## Vérifications et limites
 
 `npm test` : tests d'API, cache et SQL en local ; `npm run test:volume` : mesure agrégée synthétique, non représentative d'une charge réelle. Les scénarios Turnstile et API sont simulés. Tester impérativement le fonctionnement du site déployé et la migration sur une copie isolée avant ouverture. La présence du code sur GitHub n'implique ni migration appliquée ni collecte activée.
+
+## Anonymat public de l'éditeur (non-professionnel)
+
+La réponse publique `/api/service?action=config` ne contient désormais que `live`, `version`, `siteKey` (publique lorsqu'activée) et `email` de contact du projet. Aucune variable `LEGAL_CONTROLLER`, `LEGAL_ADDRESS` ou `LEGAL_PUBLISHER` n'est renvoyée ; elles ne sont plus requises pour activer le compteur.
+
+Les pages publiques utilisent des mentions d'éditeur non professionnel anonymisé et l'adresse professionnelle de l'hébergeur Vercel. Cette modalité suppose l'application de l'article 1-1 II de la LCEN et la communication des informations personnelles exactes à l'hébergeur. Elle ne garantit pas une absence de lien par les historiques GitHub, archives, métadonnées de domaine ou logs de prestataires.
+
+**Action requise dans Vercel :** supprimer les anciennes variables `LEGAL_CONTROLLER`, `LEGAL_ADDRESS`, `LEGAL_PUBLISHER` afin de ne pas conserver inutilement de données personnelles ; conserver `LEGAL_EMAIL` dédié. Les anciens déploiements, historiques Git ou journaux peuvent nécessiter une revue séparée. Laisser `COLLECTION_ENABLED=false` jusqu'aux tests et à la validation juridique.
