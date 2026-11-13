@@ -1,8 +1,7 @@
--- Operator-only checks; never expose these as public endpoints.
-select public.system_status();
-select public.public_count() as counter,
-       (select count(*) from private.participations) as actual_rows;
-select pg_size_pretty(pg_total_relation_size('private.participations')) as participation_storage;
+-- Vérifications d'exploitation du compteur strictement agrégé.
+select public.public_count() as total;
+select id,total from private.aggregate_count;
+-- Aucune table de participations ni de limitation IP ne doit rester.
+select to_regclass('private.participations') as individual_records,
+       to_regclass('private.rate_limits') as ip_rate_limits;
 select jobname,active,schedule from cron.job where jobname like 'roi-%';
-select jobid,status,start_time,end_time from cron.job_run_details order by start_time desc limit 10;
--- A mismatch requires investigation. Do not reset a live counter blindly.
