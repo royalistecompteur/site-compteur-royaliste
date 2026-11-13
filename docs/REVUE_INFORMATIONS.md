@@ -1,3 +1,5 @@
+> **ARCHIVE — architecture antérieure (v1–v3).** Les descriptions ci-dessous d'empreintes, codes privés, durées de 180 jours, retraits, sous-compteurs et purges ne décrivent **plus** le code courant. Consulter [README.md](../README.md), [VALIDATION.md](../VALIDATION.md) et la migration `004_anonymous_aggregate.sql` pour la version actuelle. Ne pas appliquer les procédures ci-dessous à la version agrégée.
+
 # Revue des informations — 13 novembre 2026
 
 Périmètre : appel citoyen privé, porté par un particulier à titre non professionnel (statut confirmé), sans vente, compte, newsletter ni publicité ciblée. Revue documentaire des textes et du code local, pas validation juridique définitive ni contrôle d'un hébergement réel. **La collecte et la publication restent désactivées.**
