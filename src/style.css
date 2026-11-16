@@ -29,3 +29,37 @@ header{padding-top:17px;padding-bottom:17px}
 footer{border-top:1px solid #ffffff18;padding-top:25px;padding-bottom:25px}
 @media(max-width:600px){header{padding:14px 24px;gap:12px}.brand{margin:0 auto}.brand svg{width:32px}.brand span{font-size:9px}nav{padding-top:12px}.hero{padding:26px 20px 25px}.hero h1{font-size:36px}.hero .intro{font-size:12px;max-width:290px;margin:auto}.hero-crown{display:none}.hero .counter-panel{margin:24px 0 20px}.hero .number{font-size:clamp(96px,24vw,120px);letter-spacing:-2px}.participate-cta{min-height:56px;font-size:16px}.hero-disclaimer{margin-top:18px}.home .participation{padding:0 16px 24px}.home .form-card{padding:24px 19px}.hero-reassurance{font-size:10px}.method-note{font-size:10px}}
 .form-information{font-size:12px;line-height:1.7;color:#56616d;border-left:2px solid #c8ac70;padding-left:14px;margin:18px 0 24px}.form-information p{margin:8px 0}.form-information strong{color:#24364b}
+
+
+/* Pages secondaires : contraste adapté au fond bleu marine commun. */
+.legal {
+  color: #f5f1e9;
+}
+.legal h1,
+.legal h2,
+.legal h3,
+.legal dt {
+  color: #f5f1e9;
+}
+.legal p,
+.legal dd,
+.legal li {
+  color: #c9d3e0;
+}
+.legal .text-link,
+.legal a,
+.legal .eyebrow.dark {
+  color: var(--gold);
+}
+.legal a:hover,
+.legal a:focus-visible {
+  color: #f3dfac;
+}
+.legal-alert {
+  background: #1a3149;
+  border-left-color: var(--gold);
+  color: #f5f1e9;
+}
+.legal .legal-alert {
+  color: #e1e8f0;
+}
